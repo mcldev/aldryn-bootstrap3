@@ -11,35 +11,84 @@ Example: {% thumbnail instance.file instance.srcset.lg.size ... %}
 In addition, an iterable object is available via ``instance.srcset.items`` to
 access all size settings at once.
 Example: {% for device, src in instance.srcset.items %}
-{% endcomment %}<img
-    {% if instance.use_original_image %}
-        src="{{ instance.file.url }}"
-    {% else %}
-        {% with main_src=instance.srcset.lg %}
-            {% thumbnail instance.file main_src.size crop=main_src.crop upscale=main_src.upscale subject_location=main_src.subject_location as main_thumb %}
-            src="{{ main_thumb.url }}"
-        {% endwith %}
+{% endcomment %}
+
+{% addtoblock "js" %}
+    {% if instance.popup_image %}
+        <script src="{% static 'aldryn_bootstrap3/ext-plugins/magnific-popup/1.1.0/js/magnific-popup.min.js' %}"></script>
     {% endif %}
-    alt="{{ instance.alt }}"
-    {% if instance.title %} title="{{ instance.title }}"{% endif %}
-    {% if instance.img_responsive or instance.shape or instance.thumbnail or instance.classes or request.toolbar %}
-        class="
-            {% if instance.img_responsive %}img-responsive {% endif %}
-            {% if instance.shape %}img-{{ instance.shape }} {% endif %}
-            {% if instance.thumbnail %}img-thumbnail {% endif %}
-            {% if instance.classes %}{{ instance.classes }} {% endif %}
-            {% if request.toolbar and request.toolbar.show_toolbar and request.toolbar.edit_mode and has_dnd_support %} js-aldryn-bootstrap3-image-dnd{% endif %}
-        "
+{% endaddtoblock %}
+
+{% addtoblock "css" %}
+    {% if instance.popup_image %}
+        <link rel="stylesheet" href="{% static 'aldryn_bootstrap3/ext-plugins/magnific-popup/1.1.0/css/magnific-popup.min.css' %}"/>
     {% endif %}
-    {% if request.toolbar and request.toolbar.show_toolbar and request.toolbar.edit_mode and has_dnd_support %}
-        data-dnd-filer-url="{% url 'admin:bootstrap3_image_ajax_upload' pk=instance.pk %}"
+{% endaddtoblock %}
+
+{% addtoblock "js" %}
+    {% if not request.toolbar.edit_mode and instance.popup_image %}
+        <script>
+            $(document).ready(function () {
+                $('#mfp-image-{{ instance.id }}').magnificPopup(
+                    {
+                        items: {
+                            src: '{{ instance.file.url }}'
+                        },
+                        type: 'image'});
+            });
+        </script>
     {% endif %}
-    {% if srcset_support %}
-        srcset="{% for device, src in instance.srcset.items %}
-            {% if not forloop.first %}
-                {% thumbnail instance.file src.size crop=src.crop upscale=src.upscale subject_location=src.subject_location as thumb %}{{ thumb.url }} {{ src.width_str }}{% if not forloop.last %},{% endif %}
+{% endaddtoblock %}
+
+{% spaceless %}
+    <figure class="figure"> {# Figure Container: Fills parent width 100% #}
+        <img                {# Image: use class block-center, block-left, block-right #}
+            id="mfp-image-{{ instance.id }}"
+            {% if instance.use_original_image %}
+                src="{{ instance.file.url }}"
+            {% else %}
+                {% with main_src=instance.srcset.lg %}
+                    {% thumbnail instance.file main_src.size crop=main_src.crop upscale=main_src.upscale subject_location=main_src.subject_location as main_thumb %}
+                    src="{{ main_thumb.url }}"
+                {% endwith %}
             {% endif %}
-        {% endfor %}"
-    {% endif %}
-    {{ instance.attributes_str }}
->{# include "admin/aldryn_bootstrap3/widgets/dragndrop.html" #}
+            alt="{{ instance.alt }}"
+            {% if instance.title %} title="{{ instance.title }}"{% endif %}
+            {% if instance.img_responsive or instance.shape or instance.thumbnail or instance.classes or request.toolbar %}
+            class="
+                    {% if instance.img_responsive %}img-responsive {% endif %}
+                    {% if instance.shape %}img-{{ instance.shape }} {% endif %}
+                    {% if instance.thumbnail %}img-thumbnail {% endif %}
+                    {% if instance.alignment %}block-{{ instance.alignment }}{% endif %}
+                    {% if instance.classes %}{{ instance.classes }} {% endif %}
+                    {% if request.toolbar and request.toolbar.show_toolbar and request.toolbar.edit_mode and has_dnd_support %} js-aldryn-bootstrap3-image-dnd{% endif %}
+                "
+            {% endif %}
+            {% if request.toolbar and request.toolbar.show_toolbar and request.toolbar.edit_mode and has_dnd_support %}
+                data-dnd-filer-url="{% url 'admin:bootstrap3_image_ajax_upload' pk=instance.pk %}"
+            {% endif %}
+            {% if srcset_support %}
+                srcset="
+                    {% for device, src in instance.srcset.items %}
+                        {% if not forloop.first %}
+                            {% thumbnail instance.file src.size crop=src.crop upscale=src.upscale subject_location=src.subject_location as thumb %}{{ thumb.url }}
+                            {{ src.width_str }}{% if not forloop.last %},{% endif %}
+                        {% endif %}
+                    {% endfor %}"
+            {% endif %}
+            {{ instance.attributes_str }}
+        >{# include "admin/aldryn_bootstrap3/widgets/dragndrop.html" #}
+
+        {# Image Caption / Title: use classes block-center, block-left, block-right #}
+        {% if instance.title %}
+            <figcaption class="figure-caption
+                                {% if instance.alignment %}block-{{ instance.alignment }}{% endif %}
+                                {% if instance.classes %}{{ instance.classes }}{% endif %}"
+                        {% if instance.override_width %}style="max-width:{{ instance.override_width }}px" {% endif %}>
+                {% if instance.title %}<span class="title {% if instance.description %}title_and_desc{% endif %}">{{ instance.title|linebreaks }}</span>{% endif %}
+                {% if instance.description %}<span class="desc">{{ instance.description|linebreaks }}</span>{% endif %}
+            </figcaption>
+        {% endif %}
+    </figure>
+
+{% endspaceless %}

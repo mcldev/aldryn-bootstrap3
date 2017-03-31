@@ -331,7 +331,12 @@ class Boostrap3ImagePlugin(CMSPlugin):
         default='',
     )
     title = model_fields.MiniText(
-        verbose_name=_('Title'),
+        verbose_name=_('Caption Title'),
+        blank=True,
+        default='',
+    )
+    description = model_fields.MiniText(
+        verbose_name=_('Caption Text'),
         blank=True,
         default='',
     )
@@ -393,6 +398,18 @@ class Boostrap3ImagePlugin(CMSPlugin):
     )
     classes = model_fields.Classes()
 
+    popup_image = models.BooleanField(
+        verbose_name=_('Popup original image on click (cannot be used with links)'),
+        default=False,
+    )
+    alignment = models.CharField(
+        verbose_name=_('Align Image'),
+        choices=constants.IMAGE_ALIGNMENT.FLOAT_CHOICES,
+        blank=True,
+        default='',
+        max_length=255,
+        help_text=_('Adds a class to the image for left, right or center.'),
+    )
     cmsplugin_ptr = model_fields.CMSPluginField()
 
     def __str__(self):
