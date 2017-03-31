@@ -275,16 +275,20 @@ class Bootstrap3ImageCMSPlugin(CMSPluginBase):
     fieldsets = (
         (None, {
             'fields': (
+                'title',
+                'description',
                 'file',
                 'alt',
                 ('use_original_image', 'thumbnail',),
                 ('aspect_ratio', 'shape',),
+                'popup_image',
+                'alignment',
             )
         }),
         (_('Advanced settings'), {
             'classes': ('collapse',),
             'fields': (
-                'title',
+
                 ('override_width', 'override_height',),
                 'img_responsive',
                 'classes',

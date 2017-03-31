@@ -115,3 +115,13 @@ for device in DEVICES:
     identifier = device['identifier']
     device['long_description'] = '{name} (<{width}px)'.format(**device)
     device['size_name'] = dict(SIZE_CHOICES).get(identifier)
+
+
+class IMAGE_ALIGNMENT:
+    LEFT = "left"
+    RIGHT = "right"
+    CENTER = "center"
+    FLOAT_CHOICES = ((LEFT, _("left")),
+                     (RIGHT, _("right")),
+                     (CENTER, _("center")),
+                     )
