@@ -1,4 +1,22 @@
-{% load cms_tags %}
+{% load cms_tags sekizai_tags %}
+
+{% addtoblock "js" %}
+    <script>
+        // http://stackoverflow.com/a/28593776
+        $(function () {
+            $('#{{ accordion_id }}').on('shown.bs.collapse', function (e) {
+                var toolbar_offset = {% if request.toolbar and request.toolbar.show_toolbar %} 45; {% else %} 0; {% endif %}
+                var offset = $('.panel > .panel-collapse.in').offset();
+                if(offset) {
+                    $('html,body').animate({
+                        scrollTop: $('.panel-collapse.in').siblings('.panel-heading').offset().top - toolbar_offset
+                    }, 500);
+                }
+            });
+        });
+
+    </script>
+{% endaddtoblock %}
 
 <div class="accordion panel-group
     {% if instance.context %} panel-{{ instance.context }}{% endif %}
