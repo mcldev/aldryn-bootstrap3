@@ -3,6 +3,25 @@ Changelog
 =========
 
 
+1.3.0 (2018-04-09)
+==================
+
+* Introduced Django 1.11 support
+* Fixed a bug where overriding ``Site.__str__`` resulted in invalid urls.
+* Fixed a bug in iconpicker that would prevent form submissions via keyboard
+* Fixed a bug in iconpicker when disabled prev/next buttons would be ignored
+* Added possibility of using custom iconsets with svg inlining
+
+
+1.2.2 (2017-05-09)
+==================
+
+* Fixed a bug which prevented links from working when the page
+  referenced is on a different site from the one that contains the plugin.
+* Removed unused and deprecated django-durationfield from requirements
+* Updated translations
+
+
 1.2.1 (2017-03-07)
 ==================
 
