@@ -27,11 +27,12 @@ from . import fields, constants
 
 
 def get_site_id(page):
-    try:
-        site_id = page.node.site_id
-    except AttributeError:  # CMS_3_4
-        site_id = page.site_id
-    return site_id
+    if page:
+        try:
+            site_id = page.node.site_id
+        except AttributeError:  # CMS_3_4
+            site_id = page.site_id
+        return site_id
 
 
 def get_additional_styles():
@@ -78,7 +79,7 @@ class SouthMixinBase(object):
         """Returns a suitable description of this field for South."""
         if not self.south_field_class:
             raise NotImplementedError('Please set south_field_class when '
-                                        'using the south field mixin.')
+                                      'using the south field mixin.')
         # We'll just introspect ourselves, since we inherit.
         from south.modelsinspector import introspector
         field_class = self.south_field_class
@@ -103,8 +104,8 @@ class Classes(django.db.models.TextField, SouthMixinBase):
             kwargs['default'] = ''
         if 'help_text' not in kwargs:
             kwargs['help_text'] = _('Space separated classes that are added to '
-                'the class. See <a href="http://getbootstrap.com/css/" '
-                'target="_blank">Bootstrap 3 documentation</a>.')
+                                    'the class. See <a href="http://getbootstrap.com/css/" '
+                                    'target="_blank">Bootstrap 3 documentation</a>.')
         super(Classes, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
@@ -173,9 +174,9 @@ class LinkMixin(models.Model):
         if self.link_page:
             ref_page = self.link_page
             link = ref_page.get_absolute_url()
-
-            if get_site_id(ref_page) != get_site_id(self.page):
-                ref_site = Site.objects._get_site_by_id(ref_page.site_id)
+            # DontUsePageAttributeWarning: Don't use the page attribute on CMSPlugins! CMSPlugins are not guaranteed to have a page associated with them!
+            if get_site_id(ref_page) != get_site_id(getattr(self, 'page', None)):
+                ref_site = Site.objects._get_site_by_id(get_site_id(ref_page))
                 link = '//{}{}'.format(ref_site.domain, link)
         elif self.link_url:
             link = self.link_url
@@ -208,7 +209,7 @@ class LinkMixin(models.Model):
         )
 
         anchor_field_verbose_name = force_text(
-           self._meta.get_field(anchor_field_name).verbose_name)
+            self._meta.get_field(anchor_field_name).verbose_name)
         anchor_field_value = getattr(self, anchor_field_name)
 
         link_fields = {
@@ -241,9 +242,9 @@ class LinkMixin(models.Model):
 
         if self.__class__.__name__ in required_link_classes:
             if len(provided_link_fields) == 0 and not self.link_anchor:
-               raise ValidationError(
-                   _('Please provide a link.')
-               )
+                raise ValidationError(
+                    _('Please provide a link.')
+                )
 
         if anchor_field_value:
             for field_name in provided_link_fields.keys():
@@ -448,8 +449,7 @@ class ResponsivePrint(MiniText):
         defaults.update(kwargs)
         return super(ResponsivePrint, self).formfield(**defaults)
 
-
-#TODO:
+# TODO:
 #   * btn-block, disabled
 #   * pull-left, pull-right
 #   * margins/padding
