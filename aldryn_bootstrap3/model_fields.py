@@ -172,12 +172,28 @@ class LinkMixin(models.Model):
 
     def get_link_url(self):
         if self.link_page:
+            # Lifted from DjangoCMS Link - todo - embed the DjangoCMS Link object instead?
             ref_page = self.link_page
             link = ref_page.get_absolute_url()
-            # DontUsePageAttributeWarning: Don't use the page attribute on CMSPlugins! CMSPlugins are not guaranteed to have a page associated with them!
-            if get_site_id(ref_page) != get_site_id(getattr(self, 'page', None)):
-                ref_site = Site.objects._get_site_by_id(get_site_id(ref_page))
-                link = '//{}{}'.format(ref_site.domain, link)
+
+            # simulate the call to the unauthorized CMSPlugin.page property
+            cms_page = self.placeholder.page if self.placeholder_id else None
+            if cms_page is not None:
+                if getattr(cms_page, 'node', None):
+                    ref_page_site_id = ref_page.node.site_id
+                    cms_page_site_id = getattr(cms_page.node, 'site_id', None)
+                else:
+                    ref_page_site_id = ref_page.site_id
+                    cms_page_site_id = getattr(cms_page, 'site_id', None)
+            else:
+                ref_site = Site.objects.get_current()
+                ref_page_site_id = ref_site.pk
+                cms_page_site_id = None
+
+            if ref_page_site_id != cms_page_site_id:
+                ref_site = Site.objects._get_site_by_id(ref_page_site_id).domain
+                link = '//{}{}'.format(ref_site, link)
+
         elif self.link_url:
             link = self.link_url
         elif self.link_phone:
