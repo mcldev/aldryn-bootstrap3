@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import
+
+
 
 import django.forms.widgets
 from django.template.loader import render_to_string

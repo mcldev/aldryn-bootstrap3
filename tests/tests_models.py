@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 from django.test import TestCase
 
 from aldryn_bootstrap3.models import Boostrap3ButtonPlugin

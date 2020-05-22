@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import
-
 import os
 import collections
 
@@ -1167,7 +1164,7 @@ class Bootstrap3CarouselSlideFolderPlugin(CMSPlugin):
     http://getbootstrap.com/javascript/#carousel
     """
     folder = filer.fields.folder.FilerFolderField(
-        verbose_name=_('Folder'),
+        verbose_name=_('Folder'), on_delete=models.CASCADE
     )
     classes = model_fields.Classes()
 
