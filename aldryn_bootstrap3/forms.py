@@ -139,7 +139,7 @@ class Bootstrap3CodePluginForm(django.forms.models.ModelForm):
 
 class LinkForm(django.forms.models.ModelForm):
     link_page = cms.forms.fields.PageSelectFormField(
-        queryset=cms.models.Page.objects.drafts(),
+        # queryset=cms.models.Page.objects.drafts(),
         label=_('Internal link'),
         required=False,
     )
@@ -148,6 +148,8 @@ class LinkForm(django.forms.models.ModelForm):
         # override the page_link fields queryset to containt just pages for
         # current site
         self.fields['link_page'].queryset = cms.models.Page.objects.drafts().on_site(site)
+        self.fields['link_page'].site = site
+        self.fields['link_page'].widget.site = site
 
     class Meta:
         model = models.Boostrap3ButtonPlugin
@@ -163,17 +165,6 @@ class LinkForm(django.forms.models.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LinkForm, self).__init__(*args, **kwargs)
         self.fields['link_attributes'].widget = AttributesWidget()
-
-    def _get_media(self):
-        """
-        Provide a description of all media required to render the widgets on this form
-        """
-        media = Media()
-        for field in self.fields.values():
-            media = media + field.widget.media
-        media._js = ['cms/js/libs/jquery.min.js'] + media._js
-        return media
-    media = property(_get_media)
 
 
 class Boostrap3LabelPluginForm(django.forms.models.ModelForm):
