@@ -6,6 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from .conf import settings
 
 
+# Default class for Accordion (e.g. plus-minus)
+ACCORDION_DEFAULT_CLASS = getattr(settings, 'ALDRYN_BOOTSTRAP3_ACCORDION_DEFAULT_CLASS', '')
+
+
 # Changable constants, overriden through settings
 GRID_SIZE = getattr(settings, 'ALDRYN_BOOTSTRAP3_GRID_SIZE', 24)
 
