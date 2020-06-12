@@ -15,6 +15,8 @@ from cms.models import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
+from .constants import ACCORDION_DEFAULT_CLASS
+
 try:
     from filer.admin.clipboardadmin import ajax_upload as filer_ajax_upload
 except ImportError:
@@ -843,6 +845,9 @@ class Bootstrap3AccordionCMSPlugin(CMSPluginBase):
     render_template = 'aldryn_bootstrap3/plugins/accordion.html'
     allow_children = True
     child_classes = ['Bootstrap3AccordionItemCMSPlugin']
+
+    def get_changeform_initial_data(self, request):
+        return {'classes': ACCORDION_DEFAULT_CLASS}
 
     fieldsets = (
         (None, {

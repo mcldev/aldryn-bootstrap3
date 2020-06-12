@@ -37,7 +37,6 @@ from . import model_fields, constants
 # [✓] Images
 # [✓] Helper classes (js/ckeditor.js)
 # [✓] Responsive utilities
-from .constants import ACCORDION_DEFAULT_CLASS
 
 
 @python_2_unicode_compatible
@@ -920,7 +919,7 @@ class Bootstrap3AccordionPlugin(CMSPlugin):
         blank=True,
         help_text=_('Index of element to open on page load (optional).'),
     )
-    classes = model_fields.Classes(default=ACCORDION_DEFAULT_CLASS)
+    classes = model_fields.Classes()
     attributes = AttributesField(
         verbose_name=_('Attributes'),
         blank=True,
