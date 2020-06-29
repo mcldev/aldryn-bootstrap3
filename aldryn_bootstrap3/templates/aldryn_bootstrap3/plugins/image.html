@@ -52,7 +52,7 @@ Example: {% for device, src in instance.srcset.items %}
                     src="{{ main_thumb.url }}"
                 {% endwith %}
             {% endif %}
-            alt="{{ instance.alt }}"
+            alt="{{ instance.alt|default:instance.title }}"
             {% if instance.title %} title="{{ instance.title }}"{% endif %}
             {% if instance.img_responsive or instance.shape or instance.thumbnail or instance.classes or request.toolbar %}
             class="
