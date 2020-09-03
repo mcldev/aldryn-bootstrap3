@@ -2,7 +2,7 @@
 
 <div class="panel-body
     {% if instance.classes %} {{ instance.classes }}{% endif %}"
-    {{ instance.attributes_str }}>
+    {{ instance.attributes_str }}>
 
     {% for plugin in instance.child_plugin_instances %}
         {% render_plugin plugin %}

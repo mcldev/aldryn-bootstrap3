@@ -2,7 +2,7 @@
 
 <div class="jumbotron
     {% if instance.classes %} {{ instance.classes }}{% endif %}"
-    {{ instance.attributes_str }}>
+    {{ instance.attributes_str }}>
     {% if instance.grid %}<div class="container">{% endif %}
     {% for plugin in instance.child_plugin_instances %}
         {% render_plugin plugin %}

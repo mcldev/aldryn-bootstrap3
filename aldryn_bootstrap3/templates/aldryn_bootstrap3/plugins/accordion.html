@@ -6,7 +6,7 @@
     id="{{ accordion_id }}"
     role="tablist"
     aria-multiselectable="true"
-    {{ instance.attributes_str }}>
+    {{ instance.attributes_str }}>
 
     {% for plugin in instance.child_plugin_instances %}
         {% with parentloop=forloop index=instance.index %}

@@ -1,4 +1,5 @@
-{% load cms_tags %}<a href="{{ instance.get_link_url }}"
+{% load cms_tags %}
+<a href="{{ instance.get_link_url }}"
    {% if instance.type == 'btn' or instance.txt_context or instance.classes %}
    class="
         {% if instance.type == 'btn' %}
@@ -11,12 +12,9 @@
         {% if instance.classes %} {{ instance.classes }}{% endif %}
     "
     {% endif %}
-    {% if instance.type == 'btn' %}
-        role="button"
-    {% endif %}
-    {% if instance.link_target %}
-        target="{{ instance.link_target }}"
-    {% endif %}
+    {% if instance.type == 'btn' %} role="button"{% endif %}
+    {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
+    {% if instance.link_url %} rel="noopener"{% endif %}
     {{ instance.link_attributes_str }}
     >{% spaceless %}
     {% if instance.icon_left %}{% with icon_class=instance.icon_left %}{% include 'aldryn_bootstrap3/plugins/includes/icon.html' %}{% endwith %}{% endif %}
