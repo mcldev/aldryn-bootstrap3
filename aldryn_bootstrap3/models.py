@@ -5,7 +5,6 @@ from functools import partial
 
 import django.forms.models
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext, ugettext_lazy as _, ungettext
 
@@ -39,7 +38,6 @@ from . import model_fields, constants
 # [✓] Responsive utilities
 
 
-@python_2_unicode_compatible
 class Bootstrap3RowPlugin(CMSPlugin):
     """
     CSS - Grid system: "Row" Model
@@ -78,7 +76,6 @@ class Bootstrap3RowPlugin(CMSPlugin):
         return column_count_str
 
 
-@python_2_unicode_compatible
 class Bootstrap3ColumnPlugin(CMSPlugin):
     """
     CSS - Grid system: "Column" Model
@@ -175,7 +172,6 @@ for size, name in constants.DEVICE_CHOICES:
     )
 
 
-@python_2_unicode_compatible
 class Boostrap3BlockquotePlugin(CMSPlugin):
     """
     CSS - Typography: "Blockquote" Model
@@ -203,7 +199,6 @@ class Boostrap3BlockquotePlugin(CMSPlugin):
         return ''
 
 
-@python_2_unicode_compatible
 class Boostrap3CitePlugin(CMSPlugin):
     """
     CSS - Typography: "Cite" Model
@@ -222,7 +217,6 @@ class Boostrap3CitePlugin(CMSPlugin):
         return ''
 
 
-@python_2_unicode_compatible
 class Bootstrap3CodePlugin(CMSPlugin):
     """
     CSS - Code: Model
@@ -259,7 +253,6 @@ class Bootstrap3CodePlugin(CMSPlugin):
         return '<{}>'.format(self.code_type)
 
 
-@python_2_unicode_compatible
 class Boostrap3ButtonPlugin(CMSPlugin, model_fields.LinkMixin):
     """
     CSS - Buttons: "Button/Link" Model
@@ -309,7 +302,6 @@ class Boostrap3ButtonPlugin(CMSPlugin, model_fields.LinkMixin):
         return self.label
 
 
-@python_2_unicode_compatible
 class Boostrap3ImagePlugin(CMSPlugin):
     """
     CSS - Images: Model
@@ -431,7 +423,7 @@ class Boostrap3ImagePlugin(CMSPlugin):
                 width = device['width_gutter']
             width_tag = str(width)
             if aspect_width is not None and aspect_height is not None:
-                height = int(float(width)*float(aspect_height)/float(aspect_width))
+                height = int(float(width) * float(aspect_height) / float(aspect_width))
                 crop = True
             else:
                 if self.override_height:
@@ -453,7 +445,6 @@ class Boostrap3ImagePlugin(CMSPlugin):
         return items
 
 
-@python_2_unicode_compatible
 class Bootstrap3ResponsivePlugin(CMSPlugin):
     """
     CSS - Responsive: "Utilities" Model
@@ -512,7 +503,6 @@ class Bootstrap3ResponsivePlugin(CMSPlugin):
 # [✓] Wells
 
 
-@python_2_unicode_compatible
 class Boostrap3IconPlugin(CMSPlugin):
     """
     Component - Glyphicons: "Icon" Model
@@ -537,7 +527,6 @@ class Boostrap3IconPlugin(CMSPlugin):
         return self.icon
 
 
-@python_2_unicode_compatible
 class Boostrap3LabelPlugin(CMSPlugin):
     """
     Component - Label: Model
@@ -552,8 +541,8 @@ class Boostrap3LabelPlugin(CMSPlugin):
     context = model_fields.Context(
         verbose_name=_('Context'),
         choices=(
-            ('default', _('Default')),
-        ) + constants.CONTEXT_CHOICES,
+                    ('default', _('Default')),
+                ) + constants.CONTEXT_CHOICES,
         default='default',
         blank=False,
     )
@@ -570,7 +559,6 @@ class Boostrap3LabelPlugin(CMSPlugin):
         return self.label
 
 
-@python_2_unicode_compatible
 class Boostrap3JumbotronPlugin(CMSPlugin):
     """
     Component - Jumbotron: Model
@@ -601,7 +589,6 @@ class Boostrap3JumbotronPlugin(CMSPlugin):
         return self.label or str(self.pk)
 
 
-@python_2_unicode_compatible
 class Boostrap3AlertPlugin(CMSPlugin):
     """
     Component - Alert: Model
@@ -661,7 +648,6 @@ class Bootstrap3ListGroupPlugin(CMSPlugin):
         return column_count_str
 
 
-@python_2_unicode_compatible
 class Bootstrap3ListGroupItemPlugin(CMSPlugin):
     """
     Component - List group: "Item" Model
@@ -675,8 +661,8 @@ class Bootstrap3ListGroupItemPlugin(CMSPlugin):
     context = model_fields.Context(
         verbose_name=_('Context'),
         choices=(
-            ('default', _('Default')),
-        ) + constants.CONTEXT_CHOICES,
+                    ('default', _('Default')),
+                ) + constants.CONTEXT_CHOICES,
         default='default',
         blank=False,
     )
@@ -702,7 +688,6 @@ class Bootstrap3ListGroupItemPlugin(CMSPlugin):
         return self.title
 
 
-@python_2_unicode_compatible
 class Boostrap3PanelPlugin(CMSPlugin):
     """
     Component - Panel: "Wrapper" Model
@@ -711,8 +696,8 @@ class Boostrap3PanelPlugin(CMSPlugin):
     context = model_fields.Context(
         verbose_name=_('Context'),
         choices=(
-            ('default', _('Default')),
-        ) + constants.CONTEXT_CHOICES,
+                    ('default', _('Default')),
+                ) + constants.CONTEXT_CHOICES,
         default='default',
         blank=False,
     )
@@ -729,7 +714,6 @@ class Boostrap3PanelPlugin(CMSPlugin):
         return self.context
 
 
-@python_2_unicode_compatible
 class Boostrap3PanelHeadingPlugin(CMSPlugin):
     """
     Component - Panel: "Heading" Model
@@ -754,7 +738,6 @@ class Boostrap3PanelHeadingPlugin(CMSPlugin):
         return self.title
 
 
-@python_2_unicode_compatible
 class Boostrap3PanelBodyPlugin(CMSPlugin):
     """
     Component - Panel: "Body" Model
@@ -773,7 +756,6 @@ class Boostrap3PanelBodyPlugin(CMSPlugin):
         return self.classes
 
 
-@python_2_unicode_compatible
 class Boostrap3PanelFooterPlugin(CMSPlugin):
     """
     Component - Panel: "Footer" Model
@@ -792,7 +774,6 @@ class Boostrap3PanelFooterPlugin(CMSPlugin):
         return self.classes
 
 
-@python_2_unicode_compatible
 class Boostrap3WellPlugin(CMSPlugin):
     """
     Component - Wells: Model
@@ -834,7 +815,6 @@ class Boostrap3WellPlugin(CMSPlugin):
 # [ ] Affix
 
 
-@python_2_unicode_compatible
 class Bootstrap3TabPlugin(CMSPlugin):
     """
     JavaScript - Tab: "Wrapper" Model
@@ -881,7 +861,6 @@ class Bootstrap3TabPlugin(CMSPlugin):
         return '{} {}'.format(self.style, self.effect)
 
 
-@python_2_unicode_compatible
 class Bootstrap3TabItemPlugin(CMSPlugin):
     """
     JavaScript - Tab: "Item" Model
@@ -907,7 +886,6 @@ class Bootstrap3TabItemPlugin(CMSPlugin):
         return self.title
 
 
-@python_2_unicode_compatible
 class Bootstrap3AccordionPlugin(CMSPlugin):
     """
     JavaScript - Collapse: "Accordion" Model
@@ -946,7 +924,6 @@ class Bootstrap3AccordionPlugin(CMSPlugin):
         return str(self.index)
 
 
-@python_2_unicode_compatible
 class Bootstrap3AccordionItemPlugin(CMSPlugin):
     """
     JavaScript - Collapse: "Accordion item" Model
@@ -960,8 +937,8 @@ class Bootstrap3AccordionItemPlugin(CMSPlugin):
     context = model_fields.Context(
         verbose_name=_('Context'),
         choices=(
-            ('default', _('Default')),
-        ) + constants.CONTEXT_CHOICES,
+                    ('default', _('Default')),
+                ) + constants.CONTEXT_CHOICES,
         default='default',
         blank=False,
     )
@@ -978,7 +955,6 @@ class Bootstrap3AccordionItemPlugin(CMSPlugin):
         return self.title
 
 
-@python_2_unicode_compatible
 class Bootstrap3CarouselPlugin(CMSPlugin):
     """
     JavaScript - Carousel: "Wrapper" Model
@@ -1086,7 +1062,7 @@ class Bootstrap3CarouselPlugin(CMSPlugin):
             width = device['width_gutter']  # TODO: should this should be based on the containing col size?
             width_tag = str(width)
             if aspect_width is not None and aspect_height is not None:
-                height = int(float(width)*float(aspect_height)/float(aspect_width))
+                height = int(float(width) * float(aspect_height) / float(aspect_width))
                 crop = True
             else:
                 height = 0
@@ -1105,7 +1081,6 @@ class Bootstrap3CarouselPlugin(CMSPlugin):
         return items
 
 
-@python_2_unicode_compatible
 class Bootstrap3CarouselSlidePlugin(CMSPlugin, model_fields.LinkMixin):
     """
     JavaScript - Carousel: "Slide" Model
@@ -1140,7 +1115,7 @@ class Bootstrap3CarouselSlidePlugin(CMSPlugin, model_fields.LinkMixin):
             if self.image.name:
                 image_text = self.image.name
             elif self.image.original_filename \
-                    and os.path.split(self.image.original_filename)[1]:
+                and os.path.split(self.image.original_filename)[1]:
                 image_text = os.path.split(self.image.original_filename)[1]
             else:
                 image_text = 'Image'
@@ -1157,7 +1132,6 @@ class Bootstrap3CarouselSlidePlugin(CMSPlugin, model_fields.LinkMixin):
             return image_text or content_text
 
 
-@python_2_unicode_compatible
 class Bootstrap3CarouselSlideFolderPlugin(CMSPlugin):
     """
     JavaScript - Carousel: "Slide folder" Model
@@ -1183,7 +1157,6 @@ class Bootstrap3CarouselSlideFolderPlugin(CMSPlugin):
 # [✓] File
 
 
-@python_2_unicode_compatible
 class Boostrap3SpacerPlugin(CMSPlugin):
     """
     Custom - Spacer: Model
@@ -1204,7 +1177,6 @@ class Boostrap3SpacerPlugin(CMSPlugin):
         return 'size-' + self.size + ' ' + self.classes
 
 
-@python_2_unicode_compatible
 class Bootstrap3FilePlugin(CMSPlugin):
     """
     Custom - File: Model

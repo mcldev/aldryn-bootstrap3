@@ -69,7 +69,7 @@ class MiniTextarea(django.forms.widgets.Textarea):
 
 
 class Responsive(django.forms.widgets.Textarea):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, **kwargs):
         widget_html = super(Responsive, self).render(name=name, value=value, attrs=attrs)
 
         rendered = render_to_string(
@@ -87,7 +87,7 @@ class Responsive(django.forms.widgets.Textarea):
 
 
 class ResponsivePrint(django.forms.widgets.Textarea):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, **kwargs):
         widget_html = super(ResponsivePrint, self).render(
             name=name, value=value, attrs=attrs)
 
