@@ -7,10 +7,10 @@ from aldryn_bootstrap3 import __version__
 
 REQUIREMENTS = [
     'django-appconf>=1.0.0',
-    'django-cms>=3.3.0',
-    'django-filer>=0.9.11',
-    'djangocms-text-ckeditor>=3.1.0',
-    'djangocms-attributes-field>=0.1.1',
+    'django-cms>=3.11,<3.12',
+    'django-filer>=3.0',
+    'djangocms-text-ckeditor>=5.1.0',
+    'djangocms-attributes-field>=3.0.0',
 ]
 
 
@@ -18,17 +18,15 @@ CLASSIFIERS = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
     'Framework :: Django',
-    'Framework :: Django :: 1.11',
-    'Framework :: Django :: 2.2',
+    'Framework :: Django :: 4.2',
+    'Framework :: Django CMS :: 3.11',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 3.4',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
     'Topic :: Internet :: WWW/HTTP',
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     'Topic :: Software Development :: Libraries :: Application Frameworks',
@@ -49,6 +47,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=REQUIREMENTS,
+    python_requires='>=3.9',
     classifiers=CLASSIFIERS,
     test_suite='tests.settings.run',
 )

@@ -6,7 +6,7 @@ from functools import partial
 import django.forms.models
 from django.db import models
 from django.utils.html import strip_tags
-from django.utils.translation import ugettext, ugettext_lazy as _, ungettext
+from django.utils.translation import gettext, gettext_lazy as _, ngettext
 
 import cms.models
 import cms.models.fields
@@ -59,10 +59,10 @@ class Bootstrap3RowPlugin(CMSPlugin):
         instance = self.get_plugin_instance()[0]
 
         if not instance:
-            return ugettext('<empty>')
+            return gettext('<empty>')
 
         column_count = len(self.child_plugin_instances or [])
-        column_count_str = ungettext(
+        column_count_str = ngettext(
             '1 column',
             '%(count)i columns',
             column_count
@@ -637,10 +637,10 @@ class Bootstrap3ListGroupPlugin(CMSPlugin):
         instance = self.get_plugin_instance()[0]
 
         if not instance:
-            return ugettext('<empty>')
+            return gettext('<empty>')
 
         column_count = len(self.child_plugin_instances or [])
-        column_count_str = ungettext(
+        column_count_str = ngettext(
             '1 item',
             '%(count)i items',
             column_count
@@ -910,10 +910,10 @@ class Bootstrap3AccordionPlugin(CMSPlugin):
         instance = self.get_plugin_instance()[0]
 
         if not instance:
-            return ugettext('<empty>')
+            return gettext('<empty>')
 
         column_count = len(self.child_plugin_instances or [])
-        column_count_str = ungettext(
+        column_count_str = ngettext(
             '1 item',
             '%(count)i items',
             column_count
