@@ -14,7 +14,7 @@ import cms.models.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('filer', '0002_auto_20150606_2003'),
+        ('filer', '0001_initial'),
         ('cms', '0011_auto_20150419_1006'),
     ]
 

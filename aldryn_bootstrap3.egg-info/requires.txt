@@ -1,0 +1,5 @@
+django-appconf>=1.0.0
+django-cms<3.12,>=3.11
+django-filer>=3.0
+djangocms-text-ckeditor>=5.1.0
+djangocms-attributes-field>=3.0.0
